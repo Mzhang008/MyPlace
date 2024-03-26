@@ -103,6 +103,7 @@ const UpdatePlace = () => {
   }
   return (
     <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
+      <h2>Editing Place</h2>
       <Input
         id="title"
         element="input"
