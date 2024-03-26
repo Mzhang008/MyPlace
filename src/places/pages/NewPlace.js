@@ -33,12 +33,14 @@ const NewPlace = () => {
 
   const placeSubmitHandler = event => {
     event.preventDefault();
+    console.log("submit new place");
     console.log(formState.inputs); //TODO add to server
   }
 
   return (
     <React.Fragment>
       <form className="place-form" onSubmit={placeSubmitHandler}>
+        <h2>New Place</h2>
         <Input
           id="title"
           element="input"

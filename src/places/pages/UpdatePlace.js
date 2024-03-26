@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -8,6 +8,7 @@ import {
   VALIDATOR_MINLENGTH,
 } from "../../shared/util/Validators";
 import { useForm } from "../../shared/hooks/form-hooks";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
 const DUMMY_PLACES = [
@@ -42,9 +43,10 @@ const DUMMY_PLACES = [
 const UpdatePlace = () => {
   const placeId = useParams().placeId;
   const [isLoading, setIsLoading] = useState(true);
-
+  const auth = useContext(AuthContext);
   const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
   
+  console.log(auth);
 
   const [formState, inputHandler, setFormData] = useForm({
     title: {
@@ -57,12 +59,13 @@ const UpdatePlace = () => {
         }
     },
     false);
+
   useEffect(() => {
     if (identifiedPlace){
     setFormData({
         title: {
             value: identifiedPlace.title,
-            isValid:true
+            isValid: true
             },
         description: {
             value: identifiedPlace.description,
@@ -74,8 +77,11 @@ const UpdatePlace = () => {
     setIsLoading(false);
     }, [setFormData, identifiedPlace]);
   
+  
+
   const placeUpdateSubmitHandler = event => {
     event.preventDefault();
+    console.log("update");
     console.log(formState.inputs); //TODO update on server
   }
 

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from "../../shared/hooks/form-hooks";
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/Validators';
 import Card from '../../shared/components/UIElements/Card';
+import { AuthContext } from '../../shared/context/auth-context';
 import "./Authenticate.css";
 
 
 const Authenticate = () => {
+    const auth = useContext(AuthContext);
     const [isLogin, setIsLogin] = useState(true);
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -23,8 +25,10 @@ const Authenticate = () => {
 
     const authenticateSubmitHandler = (event) => {
         event.preventDefault();
+        console.log(`formState.isValid: ${formState.isValid}`);
         console.log(formState.inputs); //TODO backend
-        console.log("submit");
+        auth.login(); //placeholder
+        console.log("submit auth");
     };
 
     const switchModeHandler = () => {
@@ -39,13 +43,17 @@ const Authenticate = () => {
         } else {
             setFormData({
                 ...formState.inputs,
-                name: ''
+                name: {
+                    value: '',
+                    isValid: false
+                }
             },
             false
             );
         }
         setIsLogin(prev => !prev);
     }
+    
     return (
       <Card className="authentication">
         {isLogin ? <h2>Login</h2> : <h2>Sign Up</h2>}
@@ -67,7 +75,7 @@ const Authenticate = () => {
                 id="email"
                 element="input"
                 type="email"
-                label="Email"
+                label="E-mail"
                 onInput={inputHandler}
                 validators={[VALIDATOR_EMAIL()]}
                 errorText="Please enter a valid email address."            
