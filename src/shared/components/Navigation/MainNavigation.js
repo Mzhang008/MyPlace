@@ -35,7 +35,7 @@ const MainNavigation = () => {
             <span></span>
         </button>
         <h1 className="main-navigation__title">
-            <Link to="/">YourPlaces</Link>
+            <Link to="/">MyPlace</Link>
         </h1>
         <nav className="main-navigation__header-nav">
             <NavLinks />
