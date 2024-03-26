@@ -31,6 +31,7 @@ const Input = (props) => {
   const { id, onInput } = props;
   const { value, isValid } = inputState;
   
+  // when any dependency value changes, use props.onInput, passing inputState values
   useEffect(() => {
     onInput(id, value, isValid)
   }, [id, value, isValid, onInput]);

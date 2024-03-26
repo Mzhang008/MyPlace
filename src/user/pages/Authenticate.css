@@ -1,0 +1,17 @@
+
+.authentication {
+    width: 90%;
+    max-width: 25rem;
+    padding: 1rem 2rem 2rem;
+    margin: 7rem auto;
+    text-align: center;
+}
+
+.login-form {
+    margin: 0 2rem 1rem;    
+}
+
+.login-form button {
+    margin-top: 0.5rem;
+}
+

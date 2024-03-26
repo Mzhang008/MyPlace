@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import MainHeader from "./MainHeader";
-import "./MainNavigation.css";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import Backdrop from "../UIElements/Backdrop";
 
-const MainNavigation = (props) => {
+import "./MainNavigation.css";
+
+const MainNavigation = () => {
   const [ drawerIsOpen, setDrawerIsOpen ] = useState(false);
   const openDrawerHandler = () => {
     setDrawerIsOpen(true);

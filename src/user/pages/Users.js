@@ -2,7 +2,7 @@ import React from "react";
 import UsersList from "../components/UsersList";
 
 //each user needs id, image, name, places
-const Users = (props) => {
+const Users = () => {
     const USERS = [
         {id: 'u1',
         name: 'Max', 
