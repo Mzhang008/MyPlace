@@ -86,7 +86,7 @@ const PlaceItem = (props) => {
         <Card className="place-item__card">
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={props.image} alt={props.title} />
+            <img src={`http://localhost:5000/${props.image}`} alt={props.title} />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
@@ -97,10 +97,10 @@ const PlaceItem = (props) => {
             <Button onClick={openMapHandler} inverse>
               View on Map
             </Button>
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>Edit</Button>
             )}
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button danger onClick={showDeleteWarningHandler}>
                 Delete
               </Button>

@@ -11,15 +11,14 @@
     "react-transition-group": "^4.4.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "plugin:storybook/recommended"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -35,20 +34,9 @@
     ]
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.2.25",
-    "@storybook/addon-essentials": "^8.0.4",
-    "@storybook/addon-interactions": "^8.0.4",
-    "@storybook/addon-links": "^8.0.4",
-    "@storybook/addon-onboarding": "^8.0.4",
-    "@storybook/blocks": "^8.0.4",
-    "@storybook/preset-create-react-app": "^8.0.4",
-    "@storybook/react": "^8.0.4",
-    "@storybook/react-webpack5": "^8.0.4",
-    "@storybook/test": "^8.0.4",
     "eslint": "^8.57.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-storybook": "^0.8.0",
     "prop-types": "^15.8.1",
     "webpack": "^5.91.0"
   }

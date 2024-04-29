@@ -7,3 +7,10 @@
     overflow: hidden;
     background: white;
 }
+
+.card.medium {
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    width: 75%
+}

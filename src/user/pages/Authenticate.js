@@ -13,10 +13,9 @@ import "./Authenticate.css";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const Authenticate = () => {
-  let i = 0;
-  console.log(i++);
   const auth = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(true);
@@ -39,34 +38,22 @@ const Authenticate = () => {
   const authenticateSubmitHandler = async (event) => {
     event.preventDefault();
     //send to signup/login
-    // setIsLoading(true);
+
     if (!isLogin) {
       //signup
       try {
+        const formData = new FormData(); //use formData so file upload can be added to http request body as it (binary data) cannot be converted to json
+        formData.append('name', formState.inputs.name.value)
+        formData.append('email', formState.inputs.email.value)
+        formData.append('password', formState.inputs.password.value)
+        console.log(formState.inputs.image.value);
+        formData.append('image', formState.inputs.image.value)
         const response = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
+          formData,
+          {}
         );
-        // const response = await fetch("http://localhost:5000/api/users/signup", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     name: formState.inputs.name.value,
-        //     email: formState.inputs.email.value,
-        //     password: formState.inputs.password.value,
-        //   }),
-        // });
-        // const data = await response.json();
         auth.login(response.user.id);
       } catch (err) {
         //
@@ -99,6 +86,7 @@ const Authenticate = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -108,6 +96,10 @@ const Authenticate = () => {
           ...formState.inputs,
           name: {
             value: "",
+            isValid: false,
+          },
+          image: {
+            value: null,
             isValid: false,
           },
         },
@@ -124,10 +116,8 @@ const Authenticate = () => {
         {isLoading && <LoadingSpinner asOverlay />}
         {isLogin ? <h2>Login</h2> : <h2>Sign Up</h2>}
         <hr />
-        <form className="login-form" onSubmit={authenticateSubmitHandler}>
-          {isLogin ? (
-            <></>
-          ) : (
+        <form className="login-form" onSubmit={authenticateSubmitHandler} encType="multipart/form-data">
+          {!isLogin && (
             <Input
               id="name"
               element="input"
@@ -137,6 +127,14 @@ const Authenticate = () => {
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a name."
             ></Input>
+          )}
+          {!isLogin && (
+            <ImageUpload
+              id="image"
+              center
+              onInput={inputHandler}
+              errorText="Please add a valid image"
+            />
           )}
           <Input
             id="email"
@@ -153,8 +151,8 @@ const Authenticate = () => {
             type="password"
             label="Password"
             onInput={inputHandler}
-            validators={[VALIDATOR_MINLENGTH(7)]}
-            errorText="Please enter a password at least 7 characters long."
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText="Please enter a password at least 6 characters long."
           ></Input>
           <Button type="submit" disabled={!formState.isValid}>
             {isLogin ? "Login" : "Signup"}
