@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,9 +19,6 @@ const App = () => {
   const { token, login, logout, userId } = useAuth();
 
   let routes;
-  useEffect(() => {
-    console.log(token)
-  }, [token]);
   if (token) {
     routes = (
       <Switch>
