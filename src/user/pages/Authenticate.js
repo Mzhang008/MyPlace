@@ -35,51 +35,6 @@ const Authenticate = () => {
     false
   );
 
-  const authenticateSubmitHandler = async (event) => {
-    event.preventDefault();
-    //send to signup/login
-
-    if (!isLogin) {
-      //signup
-      try {
-        const formData = new FormData(); //use formData so file upload can be added to http request body as it (binary data) cannot be converted to json
-        formData.append('name', formState.inputs.name.value)
-        formData.append('email', formState.inputs.email.value)
-        formData.append('password', formState.inputs.password.value)
-        console.log(formState.inputs.image.value);
-        formData.append('image', formState.inputs.image.value)
-        const response = await sendRequest(
-          "http://localhost:5000/api/users/signup",
-          "POST",
-          formData,
-          {}
-        );
-        auth.login(response.user.id);
-      } catch (err) {
-        //
-      }
-    } else {
-      //login
-      try {
-        const response = await sendRequest(
-          "http://localhost:5000/api/users/login",
-          "POST",
-          JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          { "Content-Type": "application/json" }
-        );
-        console.log(response);
-        auth.login(response.user.id);
-      } catch (err) {
-        //
-      }
-
-      console.log("submit auth");
-    }
-  };
-
   const switchModeHandler = () => {
     if (!isLogin) {
       setFormData(
@@ -109,6 +64,50 @@ const Authenticate = () => {
     setIsLogin((prev) => !prev);
   };
 
+  const authenticateSubmitHandler = async (event) => {
+    event.preventDefault();
+    //send to signup/login
+
+    if (!isLogin) {
+      //signup
+      try {
+        const formData = new FormData(); //use formData so file upload can be added to http request body as it (binary data) cannot be converted to json
+        formData.append('name', formState.inputs.name.value)
+        formData.append('email', formState.inputs.email.value)
+        formData.append('password', formState.inputs.password.value)
+        formData.append('image', formState.inputs.image.value)
+        const response = await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          formData,
+        );
+        auth.login(response.userId, response.token);
+      } catch (err) {
+        //
+      }
+    } else {
+      //login
+      try {
+        const response = await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          { "Content-Type": "application/json" }
+        );
+        console.log(response);
+        auth.login(response.userId, response.token);
+      } catch (err) {
+        //
+      }
+
+      console.log("submit auth");
+    }
+  };
+
+  
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />

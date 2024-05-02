@@ -15,8 +15,7 @@ const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const auth = useContext(AuthContext);
-  const {isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const openMapHandler = () => {
     setShowMap(true);
@@ -37,8 +36,14 @@ const PlaceItem = (props) => {
     setShowConfirmModal(false);
     console.log("deleting");
     try {
-      await sendRequest(`http://localhost:5000/api/places/${props.id}`,
-    "DELETE");
+      await sendRequest(
+        `http://localhost:5000/api/places/${props.id}`,
+        "DELETE",
+        null,
+        {
+          Authorization: `Bearer ${auth.token}`,
+        }
+      );
       props.onDelete(props.id);
     } catch (err) {
       //
@@ -86,7 +91,10 @@ const PlaceItem = (props) => {
         <Card className="place-item__card">
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={`http://localhost:5000/${props.image}`} alt={props.title} />
+            <img
+              src={`http://localhost:5000/${props.image}`}
+              alt={props.title}
+            />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>

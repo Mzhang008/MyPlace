@@ -33,7 +33,6 @@ const ImageUpload = (props) => {
     if (event.target.files && event.target.files.length === 1) {
       pickedFile = event.target.files[0];
       setFile(pickedFile);
-      console.log("hgoiehgoeih")
       console.log(file);
       setIsValid(true);
       fileIsValid = true; //state is not yet updated so need to return a separate variable indicating validity
