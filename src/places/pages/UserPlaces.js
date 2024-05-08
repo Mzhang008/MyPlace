@@ -20,6 +20,7 @@ const UserPlaces = () => {
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${userID}`,
           "GET"
         );
+        console.log(responseData);
         setLoadedPlaces(responseData.places);
       } catch (err) {
         //
@@ -40,12 +41,12 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!loadedPlaces &&
+      {!loadedPlaces && !isLoading && (
         <Card className="medium">
           <h2>No places found.</h2>
           <Button to="/places/new">Share Place</Button>
         </Card>
-      }
+      )}
       {!isLoading && loadedPlaces && (
         <PlaceList items={loadedPlaces} onDeletePlace={onDeleteHandler} />
       )}

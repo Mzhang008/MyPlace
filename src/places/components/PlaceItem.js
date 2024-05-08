@@ -81,7 +81,7 @@ const PlaceItem = (props) => {
           </React.Fragment>
         }
       >
-        <p>
+        <p> 
           Do you want to really want to delete this place? This action cannot be
           undone.
         </p>
@@ -92,7 +92,7 @@ const PlaceItem = (props) => {
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img
-              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
+              src={props.image}
               alt={props.title}
             />
           </div>
